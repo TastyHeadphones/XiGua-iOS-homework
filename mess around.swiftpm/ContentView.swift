@@ -7,14 +7,24 @@ struct ContentView: View {
     @State var lights = Lights.sharedInstance.lights
     @State var trueCount = Lights.sharedInstance.trueCount
     @State var level = 1
+    @State var timeNow = ""
     
-    
+   
+    @State var timerDisplayed = 0
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+
     var body: some View {
-        
         VStack {
             HStack{
                 Label("当前是第 \(level) 关", systemImage: "heart.fill")
                     .font(.system(size: 60))
+            }
+            HStack{
+                Text("当前用时 \(timerDisplayed) s")
+                    .font(.system(size: 50))
+                    .onReceive(timer) { _ in
+                        timerDisplayed += 1
+                                }
             }
             ForEach (0..<lights.count){
                 row in
@@ -43,7 +53,8 @@ struct ContentView: View {
                                             
                                             trueCount = Lights.sharedInstance.trueCount
                                             
-                                    level += 1
+                                            level += 1
+                                            timerDisplayed = 0
                                         }
                                     }
                                     
