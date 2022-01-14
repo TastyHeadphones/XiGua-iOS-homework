@@ -8,29 +8,25 @@ struct ContentView: View {
     @State var trueCount = Lights.sharedInstance.trueCount
     @State var level = 1
     @State var operateTimes = 0
-    
-    
+    @State var shouldShowSucceed = false
     @State var timerDisplayed = 0
+    
+    @State var succeedView = SucceedView()
+    
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     var body: some View {
-        ZStack {
-                    Circle()
-                        .fill(Color.blue)
-                        .frame(width: 50, height: 50)
-                        .modifier(ParticlesModifier())
-                        .offset(x: -100, y : -50)
-                    
-                    Circle()
-                        .fill(Color.red)
-                        .frame(width: 50, height: 50)
-                        .modifier(ParticlesModifier())
-                        .offset(x: 60, y : 70)
-        }
+        
+        
+        
         VStack {
+            
             HStack{
                 Label("当前是第 \(level) 关", systemImage: "heart.fill")
-                    .font(.system(size: 60))
+                    .font(.system(size: 50))
                 
+                
+            }.sheet(isPresented: $shouldShowSucceed) {
+                succeedView
             }
             HStack{
                 Text("当前用时 \(timerDisplayed) s")
@@ -43,45 +39,63 @@ struct ContentView: View {
                 Text("当前操作 \(operateTimes) 次")
                     .font(.system(size: 50))
             }
-        }
-        ForEach (0..<lights.count){
-            row in
-            HStack{
-                ForEach (0..<lights[0].count){
-                    col in
-                    HStack{
-                        
-                        
-                        Circle()
-                            .foregroundColor(lights[row][col].status ? lights[row][col].color : .gray)
-                            .frame(width: 120, height: 120, alignment: .center)
-                            .rotation3DEffect(lights[row][col].status ? Angle(degrees: 180): Angle(degrees: 0), axis: (x: CGFloat(0), y: CGFloat(10), z: CGFloat(0)))
-                            .animation(.default)
-                            .onTapGesture {
-                                
-                                if (lights[row][col].status){
-                                    operateTimes += 1
-                                    lights[row][col].status.toggle()
-                                    trueCount -= 1
+            
+            ForEach (0..<lights.count){
+                row in
+                HStack{
+                    ForEach (0..<lights[0].count){
+                        col in
+                        HStack{
+                            
+                            
+                            Circle()
+                                .foregroundColor(lights[row][col].status ? lights[row][col].color : .gray)
+                                .frame(width: 100, height: 100, alignment: .center)
+                                .rotation3DEffect(lights[row][col].status ? Angle(degrees: 180): Angle(degrees: 0), axis: (x: CGFloat(0), y: CGFloat(10), z: CGFloat(0)))
+                                .animation(.default)
+                                .onTapGesture {
                                     
-                                    if (trueCount <= 0){
-                                        Lights.sharedInstance.newLights()
-                                        operateTimes = 0
-                                        Lights.sharedInstance.newLights()
-                                        
-                                        lights = Lights.sharedInstance.lights
-                                        
-                                        trueCount = Lights.sharedInstance.trueCount
-                                        
-                                        level += 1
-                                        timerDisplayed = 0
-                                        
-                                        
+                                    
+                                    
+                                    for y in -1...1{
+                                        for x in -1...1{
+                                            let newCol = x + col
+                                            let newRow = y + row
+                                            
+                                            if (0 <= newCol && newCol < lights[0].count && 0 <= newRow && newRow < lights.count){
+                                                if (lights[newRow][newCol].status){
+                                                    operateTimes += 1
+                                                    trueCount -= 1
+                                                    lights[newRow][newCol].status.toggle()
+                                                    }
+                                                
+                                            }
+                                        }
                                     }
+                                        
+                                        
+                                        
+                                        if (trueCount <= 0){
+                                            Lights.sharedInstance.newLights()
+                                            
+                                            Lights.sharedInstance.newLights()
+                                            
+                                            lights = Lights.sharedInstance.lights
+                                            
+                                            trueCount = Lights.sharedInstance.trueCount
+                                            succeedView.opTimes = operateTimes
+                                            succeedView.interval = timerDisplayed
+                                            shouldShowSucceed = true
+                                            level += 1
+                                            timerDisplayed = 0
+                                            operateTimes = 0
+                                        }
+                                    }
+                                    
                                 }
-                                
-                            }
+                        }
                     }
+                    
                     
                 }
             }
@@ -89,7 +103,8 @@ struct ContentView: View {
             
         }
     }
-}
+
+
 
 
 // MARK: - 烟花特效
@@ -132,4 +147,57 @@ struct ParticlesModifier: ViewModifier {
             }
         }
     }
+}
+
+struct SucceedView: View {
+    var interval:Int = 0
+    var opTimes:Int = 0
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
+    
+    var body: some View {
+        
+        ZStack {
+            Circle()
+                .fill(Color.blue)
+                .frame(width: 50, height: 50)
+                .modifier(ParticlesModifier())
+                .offset(x: -100, y : -50)
+            
+            Circle()
+                .fill(Color.red)
+                .frame(width: 50, height: 50)
+                .modifier(ParticlesModifier())
+                .offset(x: 60, y : 70)
+            
+            
+        }
+        
+        VStack {
+                        HStack{
+                            Label("恭喜过关", systemImage: "heart.fill")
+                                .font(.system(size: 50))
+            
+                        }
+            HStack{
+                Text("用时 \(interval) s")
+                    .font(.system(size: 50))
+            }.padding()
+            HStack{
+                Text("操作 \(opTimes) 次")
+                    .font(.system(size: 50))
+            }.padding()
+            HStack{
+                Button(
+                    "下一关",
+                    action: { self.presentationMode.wrappedValue.dismiss() }
+                ).font(.system(size: 50))
+            }.padding()
+            
+            
+            
+        }
+    }
+    
+    
 }
