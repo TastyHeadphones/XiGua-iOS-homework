@@ -58,51 +58,62 @@ struct ContentView: View {
                                     
                                     
                                     for y in -1...1{
-                                        for x in -1...1{
-                                            let newCol = x + col
-                                            let newRow = y + row
-                                            
-                                            if (0 <= newCol && newCol < lights[0].count && 0 <= newRow && newRow < lights.count){
-                                                if (lights[newRow][newCol].status){
-                                                    operateTimes += 1
-                                                    trueCount -= 1
-                                                    lights[newRow][newCol].status.toggle()
-                                                    }
-                                                
-                                            }
-                                        }
-                                    }
-                                        
-                                        
-                                        
-                                        if (trueCount <= 0){
-                                            Lights.sharedInstance.newLights()
-                                            
-                                            Lights.sharedInstance.newLights()
-                                            
-                                            lights = Lights.sharedInstance.lights
-                                            
-                                            trueCount = Lights.sharedInstance.trueCount
-                                            succeedView.opTimes = operateTimes
-                                            succeedView.interval = timerDisplayed
-                                            shouldShowSucceed = true
-                                            level += 1
-                                            timerDisplayed = 0
-                                            operateTimes = 0
+                                        let newRow = y + row
+                                        if (0 <= newRow && newRow < lights.count){
+                                            if (lights[newRow][col].status){
+                                            operateTimes += 1
+                                            trueCount -= 1
+                                            lights[newRow][col].status.toggle()
                                         }
                                     }
                                     
+                                    for x in -1...1{
+                                        let newCol = x + col
+                                        
+                                        if (0 <= newCol && newCol < lights[0].count){
+                                            if (lights[row][newCol].status){
+                                                operateTimes += 1
+                                                trueCount -= 1
+                                                lights[row][newCol].status.toggle()
+                                            }
+                                            
+                                            
+                                            
+                                            
+                                        }
+                                    }
                                 }
+                            
+                            
+                            
+                            if (trueCount <= 0){
+                                Lights.sharedInstance.newLights()
+                                
+                                Lights.sharedInstance.newLights()
+                                
+                                lights = Lights.sharedInstance.lights
+                                
+                                trueCount = Lights.sharedInstance.trueCount
+                                succeedView.opTimes = operateTimes
+                                succeedView.interval = timerDisplayed
+                                shouldShowSucceed = true
+                                level += 1
+                                timerDisplayed = 0
+                                operateTimes = 0
+                            }
                         }
+                        
                     }
-                    
-                    
                 }
             }
             
             
         }
     }
+    
+    
+}
+}
 
 
 
@@ -174,11 +185,11 @@ struct SucceedView: View {
         }
         
         VStack {
-                        HStack{
-                            Label("恭喜过关", systemImage: "heart.fill")
-                                .font(.system(size: 50))
-            
-                        }
+            HStack{
+                Label("恭喜过关", systemImage: "heart.fill")
+                    .font(.system(size: 50))
+                
+            }
             HStack{
                 Text("用时 \(interval) s")
                     .font(.system(size: 50))
