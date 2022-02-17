@@ -11,26 +11,26 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="multithreading" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="async_await" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="0MF-vG-qqI">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="qec-Be-2Ox">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pBa-Yp-RK7">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="21n-yJ-e1r">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="272.5"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" image="arrow.clockwise" catalog="system"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                         <connections>
-                                            <action selector="getPhoto" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ghb-jj-7EC"/>
+                                            <action selector="getPhoto" destination="BYZ-38-t0r" eventType="touchUpInside" id="ssq-cy-nNl"/>
                                         </connections>
                                     </button>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="FJp-QB-tOI">
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="AcE-BC-qiQ">
                                         <rect key="frame" x="0.0" y="272.5" width="414" height="273"/>
                                     </activityIndicatorView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Hqn-a2-5Ly">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zor-1r-hI1">
                                         <rect key="frame" x="0.0" y="545.5" width="414" height="272.5"/>
                                     </imageView>
                                 </subviews>
@@ -39,24 +39,23 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="0MF-vG-qqI" secondAttribute="bottom" id="haT-61-JGb"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="0MF-vG-qqI" secondAttribute="trailing" id="kyE-fH-yfD"/>
-                            <constraint firstItem="0MF-vG-qqI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="u7y-2c-D3O"/>
-                            <constraint firstItem="0MF-vG-qqI" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="wTW-LF-wW4"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="qec-Be-2Ox" secondAttribute="bottom" id="EpT-aw-TXK"/>
+                            <constraint firstItem="qec-Be-2Ox" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Nqx-2j-KL6"/>
+                            <constraint firstItem="qec-Be-2Ox" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Wkl-P3-Cxl"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="qec-Be-2Ox" secondAttribute="trailing" id="zva-fO-tL4"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="imageView" destination="Hqn-a2-5Ly" id="XQO-Ft-xXh"/>
-                        <outlet property="task1Indicator" destination="FJp-QB-tOI" id="zSf-zk-JKK"/>
+                        <outlet property="imageView" destination="zor-1r-hI1" id="Lnk-O1-sUP"/>
+                        <outlet property="spiner" destination="AcE-BC-qiQ" id="0uv-Zk-z39"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="20" y="80"/>
+            <point key="canvasLocation" x="20" y="94"/>
         </scene>
     </scenes>
     <resources>
-        <image name="arrow.clockwise" catalog="system" width="115" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
